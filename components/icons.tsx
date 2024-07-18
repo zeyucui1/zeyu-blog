@@ -32,9 +32,12 @@ export const Icons = {
         height="14"
         rx="2"
         ry="2"
-        fill="black"
+        fill="currentColor"
       ></rect>
-      <path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z" fill="black"></path>
+      <path
+        d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"
+        fill="currentColor"
+      ></path>
     </svg>
   ),
   gitHub: (props: IconProps) => (
