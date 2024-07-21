@@ -15,6 +15,21 @@ async function getPostFromParams(params: PostPageProps['params']) {
 
   return post
 }
+export async function generateMetadata({ params }: PostPageProps) {
+  const post = await getPostFromParams(params)
+
+  if (!post || !post.published) {
+    return {
+      title: 'Not Found',
+      description: 'The post you are looking for does not exist.',
+    }
+  }
+
+  return {
+    title: `${post.title} - Jerry's blog`,
+    description: post.description || 'Jerry&apos;s blog',
+  }
+}
 
 export async function generateStaticParams(): Promise<
   PostPageProps['params'][]
