@@ -1,15 +1,165 @@
 ---
-title: Hello World
-description: This is our first blog post. Really cool
-date: 2024-03-06
-tags: ["code", "blog"]
+title: 'React Router Guide: Setup and Usage'
+description: A comprehensive guide to setting up and using React Router in your projects.
+date: 2023-07-28
+tags: ['code', 'react', 'router']
 published: true
 ---
 
-<Callout type="warning">Hello I am a callout</Callout>
+# React Router Guide
 
-# Hello World
+### 1. 安装
 
-Welcome to my blog `inline code`
+```bash
+npm i react-router-dom@6
+```
 
-### Header 3
+### 2. 在 app.js 中引入 `createBrowserRouter`
+
+```js
+import { createBrowserRouter } from 'react-router-dom'
+```
+
+### 3. 构建 router 结构（基础结构）
+
+#### 案例 1
+
+```js
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Home from './ui/Home'
+import Menu from './features/menu/Menu'
+import Cart from './features/cart/Cart'
+import CreateOrder from './features/order/CreateOrder'
+import Order from './features/order/Order'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/menu',
+    element: <Menu />,
+  },
+  {
+    path: '/cart',
+    element: <Cart />,
+  },
+  {
+    path: '/order/new',
+    element: <CreateOrder />,
+  },
+  {
+    path: '/order/:orderId',
+    element: <Order />,
+  },
+])
+
+const App = () => {
+  return <RouterProvider router={router} />
+}
+
+export default App
+```
+
+#### 案例 2
+
+```js
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      {
+        path: '/',
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: '/bookings',
+        element: <Bookings />,
+      },
+      {
+        path: '/cabins',
+        element: <Cabins />,
+      },
+      {
+        path: '/users',
+        element: <Users />,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
+      },
+      {
+        path: '/account',
+        element: <Account />,
+      },
+    ],
+  },
+  { path: '/login', element: <Login /> },
+  { path: '*', element: <PageNotFound /> },
+])
+
+const App = () => {
+  return <RouterProvider router={router}></RouterProvider>
+}
+```
+
+### 4. 项目页面的基本结构
+
+项目页面通常包括头部 (header)、主要内容 (main content) 和页脚 (footer)。因此，一般需要创建一个 AppLayout 页面，其中包含每个页面中都存在的组件，例如 header 和 cart。这个 AppLayout 页面通常作为父级路由器 (parent router)，其嵌套路由器 (nest router)
+
+```js
+import { Outlet } from 'react-router-dom'
+import CartOverview from '../features/cart/CartOverview'
+import Header from './Header'
+
+const AppLayout = () => {
+  return (
+    <div>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <CartOverview />
+    </div>
+  )
+}
+
+export default AppLayout
+```
+
+在这个 AppLayout 页面中，Outlet 就作为子组件的显示方式。然后在 App.jsx 中，AppLayout 作为 parent router，将使用 children 的功能将它的 nest router 包裹起来
+
+```js
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/menu',
+        element: <Menu />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
+      {
+        path: '/order/new',
+        element: <CreateOrder />,
+      },
+      {
+        path: '/order/:orderId',
+        element: <Order />,
+      },
+    ],
+  },
+])
+```
