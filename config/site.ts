@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'ZeyuBlog',
-  url: 'https://zeyu.blog',
+  url: 'https://zeyu-blog.vercel.app',
   description:
     'nextjs 14 personal blog website to share my study during the journey of software development',
   author: 'Jerry Cui',
