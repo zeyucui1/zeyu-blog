@@ -1,0 +1,105 @@
+---
+title: 'Git Workflow Guide'
+description: A comprehensive guide on how to manage your Git workflow, including forking, cloning, and creating pull requests.
+date: 2024-03-01
+tags: ['git', 'workflow', 'guide']
+published: true
+---
+
+## Prepare
+
+1. Fork TPP’s repository to your **own** GitHub.
+
+💡 How to fork a repo
+
+[Fork a repo - GitHub Docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+
+2. Clone the forked repository from your **own** GitHub (!!**not the** repo in TPP).
+
+   ```bash
+      git clone https://github.com/yourgithub/IMAS_Workload_Frontend.git
+
+   ```
+
+   Go inside the path where you cloned the repo. All commands will be run in this folder.
+
+```bash
+ cd IMAS_Workload_Frontend
+```
+
+3. Check your local repo’s remote
+
+```bash
+      git remote -v
+```
+
+**origin** is your own GitHub repo
+
+**upstream** is TPP’s GitHub repo which your forked from
+
+If you don’t have the upstream repo, add it.
+
+```bash
+   git remote add upstream https://github.com/TPP-PROJECTS/IMAS_Workload_Frontend.git
+```
+
+## Development
+
+1. Make sure your develop branch is always updated to upstream(TPP)’s develop before your create feature branch
+
+   1. go to develop
+
+```bash
+      git checkout develop
+```
+
+2.  pull the latest develop code from TPP to your local develop
+
+```bash
+      git pull --rebase upstream develop
+```
+
+2. Create new branch from develop to write code. **DO NOT** write code in main or develop branch.
+
+```bash
+      git checkout -b feature/a-new-feature-title-from-trello develop
+```
+
+3. Write your code and make commit. Please follow the `commit rules`.
+
+4. This moment, your team members may have committed their code into TPP’ develop branch so your have to update your branch.
+
+   Make sure you still in your working feature branch `(feature/a-new-feature-title-from-trello)`
+
+```bash
+      git branch
+```
+
+Then combine the TPP’s develop to your branch ( use rebase instead of merge)
+
+```bash
+      git rebase upstream/develop
+```
+
+Push your code to your own GitHub repository
+
+```bash
+      git push origin
+```
+
+If it’s your first time pushing this branch `(feature/a-new-feature-title-from-trello)` to your GitHub repository
+
+```bash
+      git push -u origin HEAD
+```
+
+5. Every time before you make a pull request you must done the step 4.
+
+   Now you can make a pull request from your feature branch to TPP’s develop branch.
+
+💡 How to create a pull request
+
+[Creating a pull request from a fork - GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
+
+Go to your GitHub repository to create pull request from the feature branch you have done of your repository to the develop branch of TPP’s repository
+

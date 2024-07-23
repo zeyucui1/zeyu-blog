@@ -1,0 +1,89 @@
+---
+title: 'Two Common Uses of the Next.js `Image` Component'
+description: 'Next.js provides a powerful `Image` component for optimizing and handling images on web pages. This article summarizes two common usage methods: standard size images and fill layout images.'
+date: 2024-03-01
+tags: ['Next.js', 'Image Component', 'Tutorial']
+published: true
+---
+
+### Two Common Uses of the Next.js `Image` Component
+
+Next.js provides a powerful `Image` component for optimizing and handling images on web pages. Here, we summarize two common usage methods: standard size images and fill layout images.
+
+### 1. Standard Size Images
+
+This method is used for loading images with fixed dimensions, suitable for cases where you need specific width and height.
+
+```jsx
+import Image from 'next/image'
+import image1 from '@/public/image1.jpg'
+
+export default function Page() {
+  return (
+    <div className="col-span-2">
+      <Image
+        src={image1}
+        alt="Family sitting around a fire pit in front of cabin"
+        width={500}
+        height={300}
+      />
+    </div>
+  )
+}
+```
+
+In this example:
+
+- `src` is the imported local image.
+- `width` and `height` properties specify the width and height of the image.
+- `alt` attribute provides alternative text for the image, used for accessibility.
+
+
+### 2. Fill Layout Images
+This method is used to set the image as the background of its container or other scenarios where responsive filling is needed.
+
+```jsx
+import Image from 'next/image';
+
+export default function Page() {
+  return (
+    <div className="relative col-span-2">
+      <Image
+        src="/about-2.jpg"
+        fill
+        className="object-cover"
+        alt="Family that manages The Wild Oasis"
+      />
+    </div>
+  );
+}
+```
+In this example:
+
+- `src` is the path to the image, which can be a relative or absolute path.
+- `fill` property is used to fill the image into its parent container.
+- The parent container needs the `relative` property.
+- `className="object-cover"` ensures the image fills the container proportionally and crops any overflow.
+- `alt` attribute provides alternative text for the image.
+
+#### If using remote images, remember to configure the next.config.js file:
+```jsx
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/storage/v1/object/public/cabin-images/**',
+      },
+    ],
+  },
+}
+```
+## Summary
+
+The Next.js Image component offers various flexible ways to load and optimize images:
+
+- **Standard Size Images**: Suitable for images with fixed dimensions, set using the `width` and `height` properties.
+- **Fill Layout Images**: Suitable for responsive background images or scenarios where the image needs to fill the parent container, set using the `fill` property and appropriate CSS classes.

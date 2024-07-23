@@ -1,0 +1,188 @@
+---
+title: 'How to Use the Next.js `Image` Component'
+description: 'Next.js provides a powerful `Image` component for optimizing and handling images on your web pages. This article covers some key features and usage examples.'
+date: 2024-03-01
+tags: ['Next.js', 'Image Component', 'Tutorial']
+published: true
+---
+
+# How to Use the Next.js `Image` Component
+
+Next.js provides a powerful `Image` component for optimizing and handling images on your web pages. Here are some key features and usage examples:
+
+## 1. Basic Usage
+
+To use the `Image` component, you need to import it from `next/image` and use it in your page:
+
+```jsx
+import Image from 'next/image'
+
+export default function Page() {
+  return (
+    <Image
+      src="/profile.png" // Local image
+      width={500} // Image width (pixels)
+      height={500} // Image height (pixels)
+      alt="Picture of the author" // Image description
+    />
+  )
+}
+```
+
+## 2. Remote Images
+
+If you're using remote images, you need to provide the full URL in the src and configure the allowed domains in next.config.js:
+
+```jsx title="pages/index.js" /https://example.com/profile.png/
+import Image from 'next/image'
+
+export default function Page() {
+  return (
+    <Image
+      src="https://example.com/profile.png" // Remote image URL
+      width={500}
+      height={500}
+      alt="Picture of the author"
+    />
+  )
+}
+
+// next.config.js
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/storage/v1/object/public/cabin-images/**',
+      },
+    ],
+  },
+}
+```
+
+## 3. Responsive Images
+
+The Image component supports various layout modes such as responsive and fill, set through the `layout` attribute:
+
+```jsx /responsive/
+import Image from 'next/image'
+
+export default function Page() {
+  return (
+    <Image
+      src="/example.png"
+      layout="responsive" // Responsive layout
+      width={800}
+      height={600}
+      alt="Example image"
+    />
+  )
+}
+```
+
+## 4. Priority Loading
+
+For important images on the page, you can use the `priority` attribute to load them first:
+
+```jsx /priority/
+import Image from 'next/image'
+
+export default function Page() {
+  return (
+    <Image
+      src="/hero.png"
+      width={1200}
+      height={600}
+      alt="Hero image"
+      priority // Priority loading
+    />
+  )
+}
+```
+
+## 5. Placeholder
+
+```jsx /placeholder/
+import Image from 'next/image'
+import cat from '../public/cat.webp'
+
+export default function Page() {
+  return (
+    <Image
+      src={cat}
+      alt="A picture of white cats"
+      width={500}
+      height={450}
+      placeholder="blur" // Blur placeholder
+    />
+  )
+}
+```
+
+### 6. Custom Loader
+
+```jsx
+import Image from 'next/image'
+
+const customLoader = ({ src, width, quality }) => {
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+}
+
+export default function Page() {
+  return (
+    <Image
+      src="profilePic.webp"
+      width={300}
+      height={300}
+      alt="User profile picture"
+      quality={80}
+      loader={customLoader} // Custom loader
+    />
+  )
+}
+```
+
+### 7. Other Attributes
+
+- **alt**: Alternative text describing the image content.
+- **blurDataURL**: Placeholder image shown before the main image loads, usually a small, base64-encoded image.
+- **loading**: Set the loading strategy, lazy (default) or eager.
+- **quality**: Specifies the quality for optimized images, range is 1-100, default is 75.
+- **sizes**: Defines media queries and sizes for responsive images.
+- **objectFit**: Sets how the image should fit within its container, values can be contain, cover, fill, etc.
+- **objectPosition**: Specifies the alignment of the image within its container, similar to the CSS object-position property.
+
+### Example Code Summary
+
+Here's a complete example demonstrating how to use these attributes:
+
+```jsx
+import Image from 'next/image'
+import bg from '@/public/bg.png'
+
+export default function Page() {
+  return (
+    <main className="mt-24">
+      <div className="col-span-2">
+        <Image
+          src={bg}
+          alt="Family sitting around a fire pit in front of cabin"
+          width={500}
+          height={300}
+        />
+      </div>
+
+      <div className="relative aspect-square col-span-2">
+        <Image
+          src="/about-2.jpg"
+          fill
+          className="object-cover"
+          alt="Family that manages The Wild Oasis"
+        />
+      </div>
+    </main>
+  )
+}
+```
