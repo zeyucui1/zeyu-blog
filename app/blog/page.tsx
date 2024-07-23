@@ -4,7 +4,7 @@ import { QueryPagination } from '@/components/query-pagination'
 import { sortPosts } from '@/lib/utils'
 export const metadata = {
   title: 'Blog',
-};
+}
 const POSTS_PER_PAGE = 5
 interface BlogPageProps {
   searchParams: {
@@ -21,7 +21,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     POSTS_PER_PAGE * currentPage
   )
 
-  
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
@@ -36,7 +35,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       {displayPosts.length > 0 ? (
         <ul className="flex flex-col">
           {displayPosts.map((post) => {
-            const { slug, title, description, date } = post
+            const { slug, title, description, date, tags } = post
             return (
               <li key={slug}>
                 <PostItem
@@ -44,6 +43,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                   date={date}
                   title={title}
                   description={description}
+                  tags={tags}
                 />
               </li>
             )
