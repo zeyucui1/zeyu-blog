@@ -1,3 +1,5 @@
+// ./components/tag.tsx
+
 import Link from 'next/link'
 import { slug } from 'github-slugger'
 import { badgeVariants } from './ui/badge'
@@ -28,13 +30,13 @@ function getColorForTag(tag: any) {
   return glassColors[index]
 }
 
-interface tagProps {
+interface TagProps {
   tag: string
   current?: boolean
   count?: number
 }
 
-export function Tag({ tag, current, count }: tagProps) {
+export function Tag({ tag, current, count }: TagProps) {
   const colorClass = getColorForTag(tag)
 
   return (
