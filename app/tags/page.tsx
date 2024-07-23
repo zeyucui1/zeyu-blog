@@ -3,10 +3,11 @@ import { Metadata } from 'next'
 import { posts } from '#site/content'
 import { Tag } from '@/components/tag'
 
-export const metaData: Metadata = {
+export const metadata: Metadata = {
   title: 'Tags',
-  description: 'All tags used in the blog posts',
+  description: "Topic I've written about",
 }
+
 export default async function TagsPage() {
   const tags = getAllTags(posts)
   const sortedTags = sortTagsByCount(tags)
